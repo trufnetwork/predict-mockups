@@ -609,6 +609,9 @@ var CONFIG = {
     },
 
     tagline: 'Call the finale before the finale calls it.',
+    heroSub: 'Who lifts the trophy, who the audience saves, who goes home. Every market ' +
+             'settles on the result announced on air at the live grand finale — one ' +
+             'source, on stage, no appeals.',
     heroEyebrow: 'Live grand finale',
     nav: ['Markets', 'My Picks', 'Shows', 'Premium'],
     ctaPrimary: 'Sign in with ZEE5',
@@ -1266,8 +1269,7 @@ function screenDiscovery() {
     '<div>' +
     '<div class="hero__eyebrow"><span class="eyebrow">' + esc(b.heroEyebrow) + '</span>' + statusBadge(flagship) + '</div>' +
     '<h1 class="hero__title">' + esc(b.tagline) + '</h1>' +
-    '<p class="hero__sub">Every market settles automatically against a published data source. ' +
-    'Take a position on the print, not on someone’s opinion of it.</p>' +
+    '<p class="hero__sub">' + esc(b.heroSub) + '</p>' +
     '<div class="hero__stats">' +
     '<div class="hero__stat"><b class="tnum">' + totalOi + '</b><span>Live markets</span></div>' +
     '<div class="hero__stat"><b class="tnum">' + traders.toLocaleString('en-US') + '</b><span>Traders</span></div>' +

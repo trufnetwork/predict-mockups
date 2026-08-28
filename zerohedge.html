@@ -608,6 +608,9 @@ var CONFIG = {
     },
 
     tagline: 'On a long enough timeline, every forecast gets priced.',
+    heroSub: 'Oil, inflation, gold, the funds rate. Every market settles on the official ' +
+             'print — BLS, EIA, CME, LBMA — the moment it lands. No narrative, no ' +
+             'revisions, no committee.',
     heroEyebrow: 'Most traded',
     nav: ['Markets', 'Positions', 'Research', 'Premium'],
     ctaPrimary: 'Connect Wallet',
@@ -1284,8 +1287,7 @@ function screenDiscovery() {
     '<div>' +
     '<div class="hero__eyebrow"><span class="eyebrow">' + esc(b.heroEyebrow) + '</span>' + statusBadge(flagship) + '</div>' +
     '<h1 class="hero__title">' + esc(b.tagline) + '</h1>' +
-    '<p class="hero__sub">Every market settles automatically against a published data source. ' +
-    'Take a position on the print, not on someone’s opinion of it.</p>' +
+    '<p class="hero__sub">' + esc(b.heroSub) + '</p>' +
     '<div class="hero__stats">' +
     '<div class="hero__stat"><b class="tnum">' + totalOi + '</b><span>Live markets</span></div>' +
     '<div class="hero__stat"><b class="tnum">' + traders.toLocaleString('en-US') + '</b><span>Traders</span></div>' +

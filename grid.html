@@ -605,6 +605,9 @@ var CONFIG = {
     },
 
     tagline: 'Every kill, every round, straight from the game server.',
+    heroSub: 'Majors, splits and player props, settled on official in-game data taken ' +
+             'straight from the server — the same feed the tournament organisers run on. ' +
+             'No scoreboard screenshots, no disputes.',
     heroEyebrow: 'Featured event',
     nav: ['Markets', 'Positions', 'Events', 'API'],
     ctaPrimary: 'Connect Wallet',
@@ -1261,8 +1264,7 @@ function screenDiscovery() {
     '<div>' +
     '<div class="hero__eyebrow"><span class="eyebrow">' + esc(b.heroEyebrow) + '</span>' + statusBadge(flagship) + '</div>' +
     '<h1 class="hero__title">' + esc(b.tagline) + '</h1>' +
-    '<p class="hero__sub">Every market settles automatically against a published data source. ' +
-    'Take a position on the print, not on someone’s opinion of it.</p>' +
+    '<p class="hero__sub">' + esc(b.heroSub) + '</p>' +
     '<div class="hero__stats">' +
     '<div class="hero__stat"><b class="tnum">' + totalOi + '</b><span>Live markets</span></div>' +
     '<div class="hero__stat"><b class="tnum">' + traders.toLocaleString('en-US') + '</b><span>Traders</span></div>' +
