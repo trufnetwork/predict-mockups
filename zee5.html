@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>ZEE5 Predict — Mockup</title>
+<title>ZEE5 Predict · Mockup</title>
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link id="brand-font" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" />
@@ -610,7 +610,7 @@ var CONFIG = {
 
     tagline: 'Call the finale before the finale calls it.',
     heroSub: 'Who lifts the trophy, who the audience saves, who goes home. Every market ' +
-             'settles on the result announced on air at the live grand finale — one ' +
+             'settles on the result announced on air at the live grand finale. One ' +
              'source, on stage, no appeals.',
     heroEyebrow: 'Live grand finale',
     nav: ['Markets', 'My Picks', 'Shows', 'Premium'],
@@ -764,7 +764,7 @@ var CONFIG = {
       question: 'Who won Sa Re Ga Ma Pa Seniors season 5 on Zee Tamil?',
       currentLabel: 'Settled from the live finale',
       openInterest: '₹27.4L',
-      volume24h: '—',
+      volume24h: '–',
       traders: 11268,
       creationCost: '250',
       settles: 'Nov 23',
@@ -790,8 +790,8 @@ var CONFIG = {
       // rappers are not public yet, so this market lists with no book.
       question: 'Who takes the crown in the ZEE5-exclusive Legacy finale?',
       currentLabel: 'Digital-only finale, judged by Raftaar and KR$NA',
-      openInterest: '—',
-      volume24h: '—',
+      openInterest: '–',
+      volume24h: '–',
       traders: 0,
       creationCost: '250',
       settles: 'Oct 16',
@@ -943,7 +943,7 @@ function marketForecast(market) {
 
 function leadingRange(market) {
   var o = market.outcomes[leadIndex(market)];
-  return o ? outcomeLabel(o, unitOf(market)) : '—';
+  return o ? outcomeLabel(o, unitOf(market)) : '–';
 }
 
 /* The outcome a resolved market settled on, if it declares one. */
@@ -1569,7 +1569,7 @@ function screenDetail() {
     accItem('How does this market resolve?',
       'When the source publishes the value for ' + esc(market.settles) +
       ', the outcome band containing that value pays out ' + esc(b.collateralSymbol) +
-      '1.00 per contract. Every other band settles at zero. Resolution is automatic — ' +
+      '1.00 per contract. Every other band settles at zero. Resolution is automatic; ' +
       'no committee reviews it.') +
     accItem('What counts as the official value?',
       'The first published print for the period, as carried on the ' + esc(b.oracleName) +
@@ -1867,7 +1867,7 @@ function applyBrand() {
   var b = CONFIG.brand;
   document.documentElement.style.setProperty('--font', b.fontFamily);
   if (b.fontUrl) document.getElementById('brand-font').href = b.fontUrl;
-  document.title = b.name + ' ' + b.product + ' — Mockups';
+  document.title = b.name + ' ' + b.product + ' · Mockups';
 }
 
 function applyTheme(name) {

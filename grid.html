@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>GRID Predict — Mockup</title>
+<title>GRID Predict · Mockup</title>
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link id="brand-font" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" />
@@ -606,7 +606,7 @@ var CONFIG = {
 
     tagline: 'Every kill, every round, straight from the game server.',
     heroSub: 'Majors, splits and player props, settled on official in-game data taken ' +
-             'straight from the server — the same feed the tournament organisers run on. ' +
+             'straight from the server: the same feed the tournament organisers run on. ' +
              'No scoreboard screenshots, no disputes.',
     heroEyebrow: 'Featured event',
     nav: ['Markets', 'Positions', 'Events', 'API'],
@@ -616,7 +616,7 @@ var CONFIG = {
     collateralLabel: 'USD',
     feeToken: 'USD',
     oracleName: 'GRID Official Data Feed',
-    oracleDetail: 'Settled from official in-game data ingested straight from the game server — the same feed that backs GRID’s sportsbook and prediction-market partners.',
+    oracleDetail: 'Settled from official in-game data ingested straight from the game server: the same feed that backs GRID’s sportsbook and prediction-market partners.',
     footnote: 'Illustrative mockup. Not affiliated with or endorsed by GRID Esports. Team, player and event names are real and public; all market data is fictional.'
   },
 
@@ -696,7 +696,7 @@ var CONFIG = {
       slug: 'porto-final-total-rounds',
       mark: 'BLA',
       markColor: '#00E58A',
-      title: 'Porto final — map 1 rounds',
+      title: 'Porto final · map 1 rounds',
       category: 'CS2',
       question: 'How many rounds are played on map 1 of the BLAST Premier Open Porto grand final?',
       unit: { symbol: ' rounds', position: 'suffix', decimals: 0 },
@@ -760,7 +760,7 @@ var CONFIG = {
       question: 'Who won the IEM Cologne Major 2026 at Lanxess Arena?',
       currentLabel: 'Settled from the official grand final result',
       openInterest: '$4.92M',
-      volume24h: '—',
+      volume24h: '–',
       traders: 28640,
       creationCost: '25.00',
       settles: 'Jun 21',
@@ -785,8 +785,8 @@ var CONFIG = {
       // Invites are not out yet, so this one lists with no book.
       question: 'Who wins PGL Masters Bucharest 2026?',
       currentLabel: 'Opens when the team list is confirmed',
-      openInterest: '—',
-      volume24h: '—',
+      openInterest: '–',
+      volume24h: '–',
       traders: 0,
       creationCost: '25.00',
       settles: 'Oct 31',
@@ -938,7 +938,7 @@ function marketForecast(market) {
 
 function leadingRange(market) {
   var o = market.outcomes[leadIndex(market)];
-  return o ? outcomeLabel(o, unitOf(market)) : '—';
+  return o ? outcomeLabel(o, unitOf(market)) : '–';
 }
 
 /* The outcome a resolved market settled on, if it declares one. */
@@ -1564,7 +1564,7 @@ function screenDetail() {
     accItem('How does this market resolve?',
       'When the source publishes the value for ' + esc(market.settles) +
       ', the outcome band containing that value pays out ' + esc(b.collateralSymbol) +
-      '1.00 per contract. Every other band settles at zero. Resolution is automatic — ' +
+      '1.00 per contract. Every other band settles at zero. Resolution is automatic; ' +
       'no committee reviews it.') +
     accItem('What counts as the official value?',
       'The first published print for the period, as carried on the ' + esc(b.oracleName) +
@@ -1862,7 +1862,7 @@ function applyBrand() {
   var b = CONFIG.brand;
   document.documentElement.style.setProperty('--font', b.fontFamily);
   if (b.fontUrl) document.getElementById('brand-font').href = b.fontUrl;
-  document.title = b.name + ' ' + b.product + ' — Mockups';
+  document.title = b.name + ' ' + b.product + ' · Mockups';
 }
 
 function applyTheme(name) {

@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>ZeroHedge Predict — Mockup</title>
+<title>ZeroHedge Predict · Mockup</title>
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link id="brand-font" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" />
@@ -609,8 +609,8 @@ var CONFIG = {
 
     tagline: 'On a long enough timeline, every forecast gets priced.',
     heroSub: 'Oil, inflation, gold, the funds rate. Every market settles on the official ' +
-             'print — BLS, EIA, CME, LBMA — the moment it lands. No narrative, no ' +
-             'revisions, no committee.',
+             'print from BLS, EIA, CME or the LBMA, the moment it lands. No narrative, ' +
+             'no revisions, no committee.',
     heroEyebrow: 'Most traded',
     nav: ['Markets', 'Positions', 'Research', 'Premium'],
     ctaPrimary: 'Connect Wallet',
@@ -619,7 +619,7 @@ var CONFIG = {
     collateralLabel: 'USDC',
     feeToken: 'ZH',
     oracleName: 'ZeroHedge Resolver',
-    oracleDetail: 'Settled from the official print — BLS, EIA, CME, LBMA. Deterministic, no committee, no revisions.',
+    oracleDetail: 'Settled from the official print: BLS, EIA, CME, LBMA. Deterministic, no committee, no revisions.',
     footnote: 'Illustrative mockup. Not affiliated with or endorsed by ZeroHedge. All market data is fictional.'
   },
 
@@ -961,7 +961,7 @@ function marketForecast(market) {
 
 function leadingRange(market) {
   var o = market.outcomes[leadIndex(market)];
-  return o ? outcomeLabel(o, unitOf(market)) : '—';
+  return o ? outcomeLabel(o, unitOf(market)) : '–';
 }
 
 /* The outcome a resolved market settled on, if it declares one. */
@@ -1587,7 +1587,7 @@ function screenDetail() {
     accItem('How does this market resolve?',
       'When the source publishes the value for ' + esc(market.settles) +
       ', the outcome band containing that value pays out ' + esc(b.collateralSymbol) +
-      '1.00 per contract. Every other band settles at zero. Resolution is automatic — ' +
+      '1.00 per contract. Every other band settles at zero. Resolution is automatic; ' +
       'no committee reviews it.') +
     accItem('What counts as the official value?',
       'The first published print for the period, as carried on the ' + esc(b.oracleName) +
@@ -1885,7 +1885,7 @@ function applyBrand() {
   var b = CONFIG.brand;
   document.documentElement.style.setProperty('--font', b.fontFamily);
   if (b.fontUrl) document.getElementById('brand-font').href = b.fontUrl;
-  document.title = b.name + ' ' + b.product + ' — Mockups';
+  document.title = b.name + ' ' + b.product + ' · Mockups';
 }
 
 function applyTheme(name) {
