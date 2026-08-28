@@ -1,6 +1,6 @@
 # Predict mockups
 
-Public mirror of the whitelabel Predict mockups, served at
+Public mirror of the Sovereign Venue Predict mockups, served at
 https://trufnetwork.github.io/predict-mockups/
 
 **Do not edit here.** This repository is generated and force-synced from a
