@@ -69,6 +69,19 @@
      when a breakpoint changes one of them. */
   --mockbar-h: 40px;
   --nav-h: 64px;
+
+  /* The assistant's avatar disc. Its own identity rather than the venue's,
+     the way the real dock carries Truman's mark inside a partner's page.
+     Overridden from CONFIG.brand.assistant.avatar. */
+  --ai-from: #001F4D;
+  --ai-to:   #0A3170;
+  /* The dock's own surface, a step away from the cards on the page so it
+     reads as floating over them rather than sitting among them. Light is
+     already at the top of the ramp, so there the separation is carried by the
+     backdrop instead. Both are set per theme in applyTheme. */
+  --ai-surface: #FFFFFF;
+  --ai-scrim: rgba(15, 23, 42, .18);
+  --ai-lift: 0 0 0 1px rgba(15, 23, 42, .05), 0 6px 14px -4px rgba(15, 23, 42, .20), 0 24px 50px -18px rgba(15, 23, 42, .40);
 }
 
 * { box-sizing: border-box; }
@@ -105,7 +118,7 @@ body.is-clean .mockbar { display: none; }
 /* ---------- app shell ------------------------------------------------------ */
 .wrap { max-width: var(--page-max); margin: 0 auto; padding: 0 20px; }
 
-.nav { background: var(--n-0); border-bottom: 1px solid var(--n-200); position: sticky; top: 0; z-index: 60; }
+.nav { background: var(--n-0); border-bottom: 1px solid var(--n-200); position: sticky; top: 0; z-index: 110; }
 body:not(.is-clean) .nav { top: var(--mockbar-h); }
 .nav__inner { display: flex; align-items: center; gap: 28px; height: var(--nav-h); }
 .brandmark { display: flex; align-items: center; gap: 9px; flex-shrink: 0; }
@@ -177,7 +190,7 @@ body.nav-open .nav__burger .is-close { display: block; }
 .logo-chip--sm { width: 32px; height: 32px; border-radius: 9px; font-size: 12px; }
 
 /* ---------- discovery ------------------------------------------------------ */
-.disco { padding: 32px 0 64px; }
+.disco { padding: 32px 0 128px; }
 .hero { display: grid; grid-template-columns: 1.05fr 1fr; gap: 32px; padding: 28px; margin-bottom: 32px; border-radius: 20px; background: var(--n-0); box-shadow: var(--shadow-card); }
 .hero__eyebrow { display: flex; align-items: center; gap: 8px; margin-bottom: 14px; }
 .hero__title { font-size: 30px; line-height: 1.2; font-weight: 700; letter-spacing: -.02em; margin: 0 0 10px; color: var(--n-800); }
@@ -217,7 +230,7 @@ body.nav-open .nav__burger .is-close { display: block; }
 .distlabels span.is-lead { color: var(--brand-ink); }
 
 /* ---------- market detail -------------------------------------------------- */
-.detail { padding: 28px 0 64px; }
+.detail { padding: 28px 0 128px; }
 .detail__cols { display: grid; grid-template-columns: minmax(0,1fr) 372px; gap: 28px; align-items: start; }
 .mhead { display: flex; align-items: flex-start; gap: 16px; margin-bottom: 22px; }
 .mhead__title { margin: 0 0 5px; font-size: 24px; font-weight: 700; letter-spacing: -.02em; color: var(--n-800); }
@@ -356,7 +369,7 @@ body.nav-open .nav__burger .is-close { display: block; }
 .shot__frame .trade { position: static; padding: 0; box-shadow: none; }
 
 /* ---------- portfolio ------------------------------------------------------ */
-.pf { padding: 30px 0 64px; }
+.pf { padding: 30px 0 128px; }
 .pf__top { display: grid; grid-template-columns: 1.35fr 1fr; gap: 20px; margin-bottom: 26px; }
 .pf__hero { padding: 24px; display: flex; flex-direction: column; }
 .pf__value { font-size: 38px; font-weight: 700; letter-spacing: -.03em; color: var(--n-800); font-variant-numeric: tabular-nums; margin: 6px 0 4px; }
@@ -378,6 +391,103 @@ body.nav-open .nav__burger .is-close { display: block; }
 .table .pos b { display: block; font-size: 13px; font-weight: 600; color: var(--n-800); }
 .table .pos span { font-size: 11px; color: var(--n-500); }
 .table .strong { font-weight: 700; color: var(--n-800); }
+
+/* ---------- AI assistant dock ---------------------------------------------- */
+/* Mirrors the shipped Truman dock: a pill fixed to the bottom centre of every
+   app screen, which grows a suggestion row and an answer card above it once a
+   preset prompt is chosen. */
+
+.dock {
+  position: fixed; left: 50%; bottom: 18px; z-index: 120;
+  width: min(420px, calc(100vw - 32px));
+  transform: translateX(-50%);
+  display: flex; flex-direction: column; gap: 10px;
+}
+.dock--open { width: min(760px, calc(100vw - 32px)); }
+
+/* With the dock open, the page behind it is pushed back so the answer card
+   reads as a layer over the app rather than one more card on it. Sits under
+   the dock, and under the nav and the mockup bar so the venue's own brand
+   stays crisp in the screenshot. */
+.dockscrim {
+  position: fixed; inset: 0; z-index: 100;
+  background: var(--ai-scrim);
+  -webkit-backdrop-filter: blur(3px);
+  backdrop-filter: blur(3px);
+}
+/* Static copy for the close-ups gallery, where it is a specimen not a dock. */
+.dock--inline { position: static; transform: none; width: 100%; }
+
+.composer {
+  display: flex; align-items: center; gap: 10px;
+  height: 68px; padding: 12px;
+  border: 1px solid var(--n-300); border-radius: 999px; background: var(--ai-surface);
+  box-shadow: var(--ai-lift);
+}
+.composer__avatar {
+  width: 44px; height: 44px; border-radius: 999px; flex: none;
+  display: grid; place-items: center; color: #FFFFFF;
+  background: linear-gradient(145deg, var(--ai-from), var(--ai-to));
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.12);
+}
+.composer__avatar svg { width: 24px; height: 24px; }
+.composer__avatar--sm { width: 36px; height: 36px; }
+.composer__avatar--sm svg { width: 20px; height: 20px; }
+.composer__input { flex: 1; min-width: 0; font-size: 15px; color: var(--n-400); }
+.composer__send {
+  width: 44px; height: 44px; border-radius: 999px; flex: none;
+  display: grid; place-items: center;
+  background: var(--brand); color: var(--brand-on);
+}
+.composer__send svg { width: 19px; height: 19px; }
+
+.chips { display: flex; gap: 6px; padding: 2px 4px; overflow-x: auto; scrollbar-width: none; }
+.chips::-webkit-scrollbar { display: none; }
+.chip-ai {
+  flex: none; display: inline-flex; align-items: center; gap: 6px;
+  height: 32px; padding: 0 12px; white-space: nowrap;
+  border: 1px solid var(--n-300); border-radius: 999px; background: var(--ai-surface);
+  font-size: 12px; font-weight: 500; color: var(--n-700);
+  box-shadow: 0 2px 6px -3px rgba(15,23,42,.24);
+}
+.chip-ai svg { width: 13px; height: 13px; color: var(--n-400); }
+.chip-ai.is-active { border-color: var(--brand-ink); color: var(--brand-ink); background: var(--brand-tint); }
+.chip-ai.is-active svg { color: var(--brand-ink); }
+
+.airesp {
+  display: flex; flex-direction: column; overflow: hidden;
+  border: 1px solid var(--n-300); border-radius: 28px; background: var(--ai-surface);
+  box-shadow: var(--ai-lift);
+}
+.airesp__head { display: flex; align-items: center; gap: 12px; padding: 13px 18px; border-bottom: 1px solid var(--n-200); }
+.airesp__who { min-width: 0; flex: 1; }
+.airesp__who b { display: block; font-size: 13px; font-weight: 600; color: var(--n-800); }
+.airesp__who span { display: block; margin-top: 2px; font-size: 12px; color: var(--n-500); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.airesp__acts { flex: none; display: flex; gap: 2px; }
+.airesp__act { width: 32px; height: 32px; border-radius: 999px; display: grid; place-items: center; color: var(--n-500); }
+.airesp__act svg { width: 15px; height: 15px; }
+.airesp__body {
+  display: flex; flex-direction: column; gap: 14px;
+  padding: 16px 18px;
+  max-height: calc(100vh - 260px); overflow-y: auto;
+}
+.airesp__intro { margin: 0; font-size: 13px; line-height: 1.6; color: var(--n-700); }
+.airesp__foot { display: flex; align-items: center; justify-content: center; gap: 6px; min-height: 38px; border-top: 1px solid var(--n-200); font-size: 12px; font-weight: 600; color: var(--n-600); }
+.airesp__foot svg { width: 13px; height: 13px; }
+
+.aistats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+.aistat { border: 1px solid var(--n-200); background: var(--n-150); border-radius: 12px; padding: 12px; }
+.aistat span { font-size: 11px; font-weight: 500; color: var(--n-500); }
+.aistat b { display: block; margin-top: 4px; font-size: 15px; font-weight: 600; color: var(--n-800); font-variant-numeric: tabular-nums; }
+.aistat small { display: block; margin-top: 3px; font-size: 11px; color: var(--n-500); }
+
+.aibullets { margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 9px; }
+.aibullets li { position: relative; padding-left: 17px; font-size: 13px; line-height: 1.55; color: var(--n-700); }
+.aibullets li::before { content: ''; position: absolute; left: 2px; top: 8px; width: 5px; height: 5px; border-radius: 999px; background: var(--brand-ink); }
+
+.aisources { display: flex; flex-wrap: wrap; gap: 6px; padding-top: 13px; border-top: 1px solid var(--n-200); }
+.aisource { display: inline-flex; align-items: center; gap: 6px; border-radius: 999px; background: var(--n-150); padding: 4px 10px; font-size: 11px; color: var(--n-600); }
+.aisource b { font-weight: 700; color: var(--n-700); font-variant-numeric: tabular-nums; }
 
 /* ---------- responsive ----------------------------------------------------- */
 /* Four steps: 1080 collapses the two-column screens, 880 folds the nav into a
@@ -497,6 +607,16 @@ body.nav-open .nav__burger .is-close { display: block; }
   .table--orders th:nth-child(3), .table--orders td:nth-child(3),
   .table--orders th:nth-child(5), .table--orders td:nth-child(5),
   .table--orders th:nth-child(7), .table--orders td:nth-child(7) { display: none; }
+
+  /* assistant dock */
+  .disco, .detail, .pf { padding-bottom: 112px; }
+  .dock { bottom: 12px; }
+  .composer { height: 56px; padding: 8px; gap: 8px; }
+  .composer__avatar, .composer__send { width: 40px; height: 40px; }
+  .composer__input { font-size: 14px; }
+  .airesp__head { padding: 12px 14px; }
+  .airesp__body { padding: 14px; max-height: calc(100vh - 220px); }
+  .aistats { grid-template-columns: 1fr; }
 
   /* close-ups */
   .closeups { padding: 24px 0 48px; }
@@ -619,6 +739,14 @@ var CONFIG = {
     collateralSymbol: '₹',
     collateralLabel: 'Coins',
     feeToken: 'ZC',
+    /* Truman is the same assistant in every venue, so its name and its avatar
+     * do not change with the brand. Only the prompts below it do. */
+    assistant: {
+      name: 'Truman',
+      placeholder: 'Ask Truman anything...',
+      avatar: { from: '#001F4D', to: '#0A3170' }
+    },
+
     oracleName: 'ZEE5 Live Result Feed',
     oracleDetail: 'Settled from the official on-air result at the live grand finale. One source, announced on stage, no appeals.',
     footnote: 'Illustrative mockup. Not affiliated with or endorsed by ZEE5 or Zee Entertainment. Contestant names are real and public; all market data is fictional.'
@@ -657,6 +785,50 @@ var CONFIG = {
         { kind: 'named', label: 'Aradhya Rao', short: 'Aradhya',   chance: 10, change: -2, yes: 10, no: 91 },
         { kind: 'named', label: 'Sudheeksha', short: 'Sudheeksha', chance:  8, change: -1, yes:  8, no: 93 }
       ],
+      /* Written for this finale: six named finalists, settled on the result
+       * announced on air. The odds are this market's own; the line-up, the
+       * judges and the voting mechanic are real and cited. */
+      assistantPrompts: [
+        {
+          chip: 'Who is ahead',
+          question: 'Who is the front-runner going into the grand finale?',
+          intro: 'Balu Belgundi leads the book going into the Zee Kannada finale.',
+          stats: [
+            { label: 'Front-runner', value: 'Balu Belgundi', note: '29% and rising' },
+            { label: 'Closest rival', value: 'Aagama Shastry', note: '22%' },
+            { label: 'Finale', value: 'Sep 20', note: 'Live on ZEE5 before TV' }
+          ],
+          bullets: [
+            'Seven points separate the top two, the narrowest that gap has been since the field cut to six.',
+            'Aradhya Rao sits at 10%, but took the Ticket to Finale round, so a place in the finale was already banked.',
+            'The bottom three share 31% between them, so this is not yet a two-horse race.'
+          ],
+          sources: ['ZEE5 live result feed', 'Zee Kannada Ticket to Finale']
+        },
+        {
+          chip: 'How the odds moved',
+          question: 'How have the odds moved in the run-up to the finale?',
+          intro: 'Here is the week on the ladder.',
+          bullets: [
+            'Balu Belgundi added four points, the largest single move on the board.',
+            'Amogha Varsha gave up three and has slipped behind Aagama Shastry.',
+            'Aradhya Rao and Sudheeksha both drifted, and neither has held above 10% since the field was cut.'
+          ],
+          sources: ['ZEE5 live result feed', 'Episode ratings']
+        },
+        {
+          chip: 'How it settles',
+          question: 'What decides this, and can the odds still move on the night?',
+          intro: 'One result, announced on stage, with the audience still voting into it.',
+          bullets: [
+            'Judging is Vijay Prakash, Rajesh Krishnan and Arjun Janya, with Anushree hosting the finale.',
+            'Viewers vote through the ZEE5 app during the voting window, so the ladder can move while this market is still live.',
+            'The finale streams live on ZEE5 ahead of the television broadcast, and settlement follows the result announced on air.'
+          ],
+          sources: ['ZEE5 live result feed', 'Zee Kannada broadcast']
+        }
+      ],
+
       activity: [
         { side: 'buy-yes',  outcome: 0, amount: '₹12,400', price: '29¢', actor: '0x7c…91a2', time: '3m ago' },
         { side: 'buy-yes',  outcome: 1, amount:  '₹8,900', price: '22¢', actor: '0x19…4f8c', time: '16m ago' },
@@ -907,6 +1079,20 @@ function money(value, decimals) {
 function signed(value, decimals) {
   var n = Number(value);
   return (n >= 0 ? '+' : '−') + money(Math.abs(n), decimals);
+}
+
+/* Markets that can be traded right now: open, unresolved, and with a book.
+ * The discovery hero, the detail screen, the close-ups and the assistant dock
+ * all lead with these, so the predicate lives here rather than in each. */
+function tradableMarkets() {
+  var open = CONFIG.markets.filter(function (m) {
+    return m.outcomes.length && m.status !== 'soon' && m.resolvedOutcome == null;
+  });
+  return open.length ? open : CONFIG.markets;
+}
+
+function flagshipMarket() {
+  return tradableMarkets()[0];
 }
 
 function leadIndex(market) {
@@ -1250,9 +1436,7 @@ function marketCard(market) {
 
 function screenDiscovery() {
   var b = CONFIG.brand;
-  var flagship = CONFIG.markets.filter(function (m) {
-    return m.outcomes.length && m.status !== 'soon' && m.resolvedOutcome == null;
-  })[0] || CONFIG.markets[0];
+  var flagship = flagshipMarket();
   var categories = ['All'];
   CONFIG.markets.forEach(function (m) {
     if (categories.indexOf(m.category) === -1) categories.push(m.category);
@@ -1316,7 +1500,117 @@ function screenDiscovery() {
     '<div class="grid">' + CONFIG.markets.map(marketCard).join('') + '</div>' +
 
     '<p style="margin:34px 0 0;text-align:center;font-size:12px;color:var(--n-500)">' + esc(b.footnote) + '</p>' +
-    '</div></div>'
+    '</div></div>' +
+    aiDock(flagship, null)
+  );
+}
+
+/* ------------------------------------------------------- assistant: Truman - */
+/* The shipped dock resolves its suggested prompts from the page it is on, so
+ * the mockup does the same: prompts and their canned answers hang off the
+ * market, not off the brand. A market without them still shows the pill. */
+
+function assistantConfig() {
+  return CONFIG.brand.assistant || {};
+}
+
+function assistantPrompts(market) {
+  return (market && market.assistantPrompts) || [];
+}
+
+/* The pill. Suggestions appear above it, the way the real composer reveals
+ * them once it has focus. */
+function aiComposer(market, showChips, activeIndex) {
+  var a = assistantConfig();
+  var prompts = assistantPrompts(market);
+  var chips =
+    showChips && prompts.length
+      ? '<div class="chips">' +
+        prompts
+          .map(function (p, i) {
+            return (
+              '<button class="chip-ai' + (i === activeIndex ? ' is-active' : '') + '">' +
+              esc(p.chip) + iconCornerUp() + '</button>'
+            );
+          })
+          .join('') +
+        '</div>'
+      : '';
+
+  return (
+    chips +
+    '<div class="composer">' +
+    '<span class="composer__avatar">' + iconOwl() + '</span>' +
+    '<span class="composer__input">' + esc(a.placeholder || 'Ask anything...') + '</span>' +
+    '<button class="composer__send" aria-label="Send">' + iconArrowUp() + '</button>' +
+    '</div>'
+  );
+}
+
+/* One canned answer. `stats`, `bullets` and `sources` are each optional, which
+ * is what lets a numbers answer and a headlines answer share one shape. */
+function aiResponse(market, index) {
+  var a = assistantConfig();
+  var p = assistantPrompts(market)[index];
+
+  var stats = !p.stats ? '' :
+    '<div class="aistats">' +
+    p.stats
+      .map(function (st) {
+        return (
+          '<div class="aistat"><span>' + esc(st.label) + '</span>' +
+          '<b class="tnum">' + esc(st.value) + '</b>' +
+          (st.note ? '<small>' + esc(st.note) + '</small>' : '') + '</div>'
+        );
+      })
+      .join('') +
+    '</div>';
+
+  var bullets = !p.bullets ? '' :
+    '<ul class="aibullets">' +
+    p.bullets.map(function (b) { return '<li>' + esc(b) + '</li>'; }).join('') +
+    '</ul>';
+
+  var sources = !p.sources ? '' :
+    '<div class="aisources">' +
+    p.sources
+      .map(function (src, i) {
+        return '<span class="aisource"><b>' + (i + 1) + '</b>' + esc(src) + '</span>';
+      })
+      .join('') +
+    '</div>';
+
+  return (
+    '<article class="airesp">' +
+    '<header class="airesp__head">' +
+    '<span class="composer__avatar composer__avatar--sm">' + iconOwl() + '</span>' +
+    '<div class="airesp__who"><b>' + esc(a.name || 'Assistant') + '</b>' +
+    '<span>' + esc(p.question) + '</span></div>' +
+    '<div class="airesp__acts">' +
+    '<span class="airesp__act">' + iconPlus() + '</span>' +
+    '<span class="airesp__act">' + iconExternal() + '</span>' +
+    '<span class="airesp__act">' + iconClose() + '</span>' +
+    '</div></header>' +
+    '<div class="airesp__body">' +
+    '<p class="airesp__intro">' + esc(p.intro) + '</p>' +
+    stats + bullets + sources +
+    '</div>' +
+    '<div class="airesp__foot">' + iconChevronUp() + 'Expand answer</div>' +
+    '</article>'
+  );
+}
+
+/* openIndex null renders the collapsed pill that sits on every app screen.
+ * A number renders it mid-conversation, which is the AI Assistant screen. */
+function aiDock(market, openIndex, inline) {
+  var open = openIndex != null && assistantPrompts(market)[openIndex];
+  return (
+    // The gallery specimen is a static copy, so it never dims the page.
+    (open && !inline ? '<div class="dockscrim" aria-hidden="true"></div>' : '') +
+    '<div class="dock' + (open ? ' dock--open' : '') + (inline ? ' dock--inline' : '') + '">' +
+    (open ? aiResponse(market, openIndex) : '') +
+    aiComposer(market, Boolean(open), openIndex) +
+    '</div>'
   );
 }
 
@@ -1496,11 +1790,11 @@ function activityList(market) {
     .join('');
 }
 
-function screenDetail() {
+/* `assistantOpen` is the index of the preset prompt to show answered. Left
+ * out, the dock renders as the collapsed pill it is on a normal visit. */
+function screenDetail(assistantOpen) {
   var b = CONFIG.brand;
-  var market = CONFIG.markets.filter(function (m) {
-    return m.outcomes.length && m.status !== 'soon' && m.resolvedOutcome == null;
-  })[0] || CONFIG.markets[0];
+  var market = flagshipMarket();
   var lead = leadIndex(market);
   var points = 30;
   var series = buildSeries(market, points);
@@ -1590,7 +1884,8 @@ function screenDetail() {
     '</div>' +
 
     '<div>' + tradePanel(market, lead, 'market') + '</div>' +
-    '</div></div></div>'
+    '</div></div></div>' +
+    aiDock(market, assistantOpen == null ? null : assistantOpen)
   );
 }
 
@@ -1606,10 +1901,7 @@ function accItem(question, answer) {
 /* ------------------------------------------------------- screen: closeups - */
 
 function screenCloseups() {
-  var tradable = CONFIG.markets.filter(function (m) {
-    return m.outcomes.length && m.status !== 'soon' && m.resolvedOutcome == null;
-  });
-  if (!tradable.length) tradable = CONFIG.markets;
+  var tradable = tradableMarkets();
 
   var priceMarket = tradable[0];
   var pctMarket = null;
@@ -1667,6 +1959,9 @@ function screenCloseups() {
 
     shot('Discovery card', 'Grid tile as it appears at /markets',
       marketCard(tradable[2] || priceMarket), true) +
+
+    shot(esc(assistantConfig().name || 'Assistant'), 'Preset prompt, answered in place',
+      aiDock(priceMarket, 0, true), true) +
 
     '</div></div></div>'
   );
@@ -1786,7 +2081,8 @@ function screenPortfolio() {
     '</div>' +
 
     '<p style="margin:30px 0 0;text-align:center;font-size:12px;color:var(--n-500)">' + esc(b.footnote) + '</p>' +
-    '</div></div>'
+    '</div></div>' +
+    aiDock(flagshipMarket(), null)
   );
 }
 
@@ -1810,6 +2106,32 @@ function iconMenu() {
 function iconClose() {
   return '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg>';
 }
+/* Truman's owl, the same mark the product ships. */
+function iconOwl() {
+  return '<svg viewBox="0 0 308 309" fill="none" aria-hidden="true">' +
+    '<path d="M217.732 92.209C252.551 92.209 280.777 120.435 280.777 155.254V279.911H154.687V155.254C154.687 120.435 182.913 92.209 217.732 92.209Z" stroke="currentColor" stroke-width="14.3284"/>' +
+    '<path d="M90.9258 92.209C126.14 92.2092 154.687 120.756 154.687 155.971V279.911H27.1641V155.971C27.1641 120.756 55.7114 92.209 90.9258 92.209Z" stroke="currentColor" stroke-width="14.3284"/>' +
+    '<path d="M280.775 146.657V148.761C280.775 221.193 224.002 279.911 153.969 279.911C83.9361 279.911 27.1631 221.193 27.1631 148.761" stroke="currentColor" stroke-width="14.3284"/>' +
+    '<path d="M153.971 29.1641C224.003 29.1643 280.776 85.9371 280.776 155.97V279.911H27.1641V155.971C27.1641 85.9377 83.9377 29.1641 153.971 29.1641Z" stroke="currentColor" stroke-width="14.3284"/>' +
+    '<path d="M71.582 137.981H99.9131C114.532 137.981 126.383 149.832 126.383 164.451V182.481H98.0518C83.433 182.481 71.582 170.63 71.582 156.011V137.981Z" fill="currentColor"/>' +
+    '<path d="M237.791 137.981H209.46C194.841 137.981 182.99 149.832 182.99 164.451V182.481H211.321C225.94 182.481 237.791 170.63 237.791 156.011V137.981Z" fill="currentColor"/>' +
+    '</svg>';
+}
+function iconArrowUp() {
+  return '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5M5 12l7-7 7 7"/></svg>';
+}
+function iconCornerUp() {
+  return '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 9l5-5 5 5"/><path d="M4 20h7a4 4 0 0 0 4-4V4"/></svg>';
+}
+function iconPlus() {
+  return '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>';
+}
+function iconExternal() {
+  return '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 4h6v6"/><path d="M20 4l-8 8"/><path d="M18 14v4a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4"/></svg>';
+}
+function iconChevronUp() {
+  return '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 15l-6-6-6 6"/></svg>';
+}
 function iconShield() {
   return '<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="var(--brand)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l7 3v6c0 4.4-3 7.7-7 9-4-1.3-7-4.6-7-9V6z"/><path d="M9 12l2 2 4-4"/></svg>';
 }
@@ -1819,6 +2141,8 @@ function iconShield() {
 var SCREENS = [
   { key: 'discovery', label: 'Discovery', render: screenDiscovery },
   { key: 'detail',    label: 'Market detail', render: screenDetail },
+  { key: 'assistant', label: 'AI Assistant',
+    render: function () { return screenDetail(0); } },
   { key: 'closeups',  label: 'Close-ups', render: screenCloseups },
   { key: 'portfolio', label: 'Portfolio', render: screenPortfolio }
 ];
@@ -1895,6 +2219,24 @@ function applyTheme(name) {
   root.setProperty('--brand-ink', theme.brandInk || c.brand);
   root.setProperty('--brand-tint', theme.brandTint || LIGHT_BASE['--brand-tint'] || '#F4F4FF');
   root.setProperty('--brand-on', theme.brandOn || '#FFFFFF');
+
+  // The assistant avatar keeps its own identity unless a brand restyles it.
+  var avatar = (b.assistant && b.assistant.avatar) || {};
+  root.setProperty('--ai-from', avatar.from || '#001F4D');
+  root.setProperty('--ai-to', avatar.to || '#0A3170');
+  // Set before theme.vars, so a theme can still name its own.
+  // Dark lifts the dock above the brand's own card colour, whatever it is;
+  // light is already at white, so the separation comes from the backdrop.
+  root.setProperty('--ai-surface',
+    THEME === 'dark' ? 'color-mix(in srgb, var(--n-0) 88%, #FFFFFF 12%)' : '#FFFFFF');
+  root.setProperty('--ai-scrim',
+    THEME === 'dark' ? 'rgba(4, 8, 15, .52)' : 'rgba(15, 23, 42, .18)');
+  // Dark carries its separation in the surface itself, so it needs only a
+  // soft ambient shadow; light carries all of it here.
+  root.setProperty('--ai-lift',
+    THEME === 'dark'
+      ? '0 0 0 1px rgba(0, 0, 0, .5), 0 22px 48px -20px rgba(0, 0, 0, .75)'
+      : '0 0 0 1px rgba(15, 23, 42, .05), 0 6px 14px -4px rgba(15, 23, 42, .20), 0 24px 50px -18px rgba(15, 23, 42, .40)');
 
   // 4. per-theme token overrides, last word
   if (theme.vars) {
