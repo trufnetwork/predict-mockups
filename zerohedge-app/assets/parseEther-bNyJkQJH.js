@@ -1,0 +1,1 @@
+import{qt as e}from"./ccip-Dcgs8y_k.js";function t(t,n=`wei`){return e(t,n)}export{t};

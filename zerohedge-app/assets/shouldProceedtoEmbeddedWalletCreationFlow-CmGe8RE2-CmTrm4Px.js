@@ -1,0 +1,1 @@
+import{S as e,y as t}from"./index-nRwC4QtN-D00FXaB-.js";var n=(n,r)=>e(n,r.ethereum.createOnLogin)||t(n,r.solana.createOnLogin);export{n as t};
